@@ -103,7 +103,7 @@ function Index() {
     <main className="overflow-x-hidden">
       <div className="fixed inset-x-0 top-0 z-50 h-1 origin-left bg-gold shadow-glow" style={{ transform: `scaleX(${progress})` }} />
       {/* Hero */}
-      <section className="relative min-h-[100svh] flex flex-col items-center justify-center px-5 py-16 text-center">
+      <section className="relative min-h-[100svh] flex flex-col items-center justify-center px-5 py-16 text-center overflow-hidden">
         <img src={hero} alt="Worshippers raising hands in golden light" width={1280} height={1600} className="absolute inset-0 h-full w-full object-cover will-change-transform" style={{ transform: `translateY(${y * 0.35}px) scale(${1 + y * 0.0003})` }} />
         <div className="absolute inset-0 bg-ember-fade" />
         {Array.from({ length: 14 }).map((_, i) => (
@@ -128,13 +128,14 @@ function Index() {
       </section>
 
       {/* Countdown */}
-      <section className="px-5 py-16 bg-muted">
-        <p className="text-center text-sm uppercase tracking-[0.3em] text-muted-foreground">Counting down to glory</p>
-        <div data-stagger className="mx-auto mt-6 grid max-w-2xl grid-cols-4 gap-2 sm:gap-4">
+      <section className="px-5 py-20 sm:py-28 bg-muted">
+        <p className="text-center text-base sm:text-xl font-semibold uppercase tracking-[0.35em] text-muted-foreground">Counting down to glory</p>
+        <div className="mx-auto mt-3 h-px w-24 bg-gold/50" />
+        <div data-stagger className="mx-auto mt-10 grid max-w-5xl grid-cols-2 gap-3 sm:mt-14 sm:grid-cols-4 sm:gap-5">
           {([["Days", c.days], ["Hours", c.hours], ["Mins", c.mins], ["Secs", c.secs]] as const).map(([l, v]) => (
-            <div key={l} className="rounded-2xl border border-border bg-background p-3 sm:p-6 text-center">
-              <div className="font-display text-3xl sm:text-5xl font-semibold text-gold tabular-nums">{c.ready ? String(v).padStart(2, "0") : "--"}</div>
-              <div className="mt-1 text-[10px] sm:text-xs uppercase tracking-widest text-muted-foreground">{l}</div>
+            <div key={l} className="rounded-3xl border border-border bg-background px-3 py-8 text-center shadow-glow sm:px-6 sm:py-12">
+              <div className="font-display text-6xl font-semibold leading-none text-gold tabular-nums sm:text-7xl md:text-8xl">{c.ready ? String(v).padStart(2, "0") : "--"}</div>
+              <div className="mt-3 text-xs font-bold uppercase tracking-[0.25em] text-muted-foreground sm:mt-5 sm:text-sm">{l}</div>
             </div>
           ))}
         </div>
