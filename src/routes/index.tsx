@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { TrainFront, Footprints, CalendarPlus, Clock, MapPin, Share2, Navigation, Heart, Music, HandHeart, Users } from "lucide-react";
+import { Footprints, CalendarPlus, Clock, MapPin, Share2, Navigation, Heart, Music, HandHeart, Users } from "lucide-react";
 import hero from "@/assets/worship-hero.jpg";
 import logo from "@/assets/jctgbtg-banner.jpg.asset.json";
 
@@ -163,31 +163,53 @@ function Index() {
         </div>
       </section>
 
-      {/* Getting here */}
+      {/* Getting here — TfL style */}
       <section className="px-5 pb-20">
-        <h2 className="font-display text-center text-4xl sm:text-5xl">Getting here by <span className="italic text-gold">Tube</span></h2>
-        <div className="mx-auto mt-10 max-w-3xl rounded-3xl border border-border bg-muted p-6 sm:p-10">
-          <div className="flex items-center gap-4">
-            <div className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-gold text-primary-foreground"><TrainFront className="h-7 w-7" /></div>
-            <div className="min-w-0"><div className="font-display text-2xl">Latimer Road Station</div><div className="text-sm text-muted-foreground">Nearest station to Westway Sports Centre</div></div>
+        <div className="mx-auto max-w-3xl overflow-hidden rounded-2xl bg-tfl-white text-tfl-ink shadow-glow">
+          <div className="flex items-center gap-4 bg-tfl-blue px-5 py-4 text-tfl-white">
+            <Roundel />
+            <div className="min-w-0">
+              <div className="text-xs font-bold uppercase tracking-widest opacity-80">Getting here by</div>
+              <div className="text-2xl sm:text-3xl font-extrabold">Underground</div>
+            </div>
           </div>
-          <div className="mt-6 flex flex-wrap gap-2">
-            <span className="rounded-full bg-primary px-4 py-1.5 text-sm font-bold text-primary-foreground">Circle line</span>
-            <span className="rounded-full bg-secondary px-4 py-1.5 text-sm font-bold text-secondary-foreground">Hammersmith &amp; City line</span>
+
+          <div className="p-5 sm:p-8">
+            <div className="flex items-center gap-3">
+              <Roundel small />
+              <div className="text-2xl sm:text-3xl font-extrabold tracking-tight">Latimer Road</div>
+            </div>
+            <div className="mt-4 grid gap-2 sm:grid-cols-2">
+              <div className="flex items-center gap-3 rounded-md border border-tfl-ink/15 px-3 py-2">
+                <span className="h-3 w-10 shrink-0 rounded-sm bg-tube-circle" />
+                <span className="font-bold">Circle line</span>
+              </div>
+              <div className="flex items-center gap-3 rounded-md border border-tfl-ink/15 px-3 py-2">
+                <span className="h-3 w-10 shrink-0 rounded-sm bg-tube-hc" />
+                <span className="font-bold">Hammersmith &amp; City line</span>
+              </div>
+            </div>
+
+            {/* Line diagram */}
+            <ol className="relative mt-8 ml-3">
+              <span className="absolute left-[7px] top-2 bottom-2 w-2 -translate-x-1/2 rounded bg-gradient-to-b from-tube-circle to-tube-hc" />
+              {[
+                ["Take the Tube", "Circle or Hammersmith & City line to Latimer Road."],
+                ["Exit the station", "Leave Latimer Road station onto Bramley Road."],
+                ["Westway Sports Centre", "About a 5 minute walk · W10 6RP"],
+              ].map(([t, d], i, arr) => (
+                <li key={t} className="relative flex gap-5 pb-7 last:pb-0">
+                  <span className={`relative z-10 mt-1 h-4 w-4 shrink-0 rounded-full border-4 ${i === arr.length - 1 ? "border-tfl-red bg-tfl-white scale-150" : "border-tfl-ink bg-tfl-white"}`} />
+                  <div className="min-w-0">
+                    <div className="font-extrabold">{t}</div>
+                    <div className="text-sm opacity-70">{d}</div>
+                  </div>
+                </li>
+              ))}
+            </ol>
+
+            <a href={`https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent("Latimer Road Station, London")}&destination=${encodeURIComponent(VENUE)}&travelmode=walking`} target="_blank" rel="noreferrer" className="mt-8 flex items-center justify-center gap-2 rounded-md bg-tfl-blue px-6 py-3 font-bold text-tfl-white transition hover:scale-[1.02] active:scale-95"><Footprints className="h-5 w-5" />Walking route from the station</a>
           </div>
-          <ol className="mt-8 space-y-5">
-            {[
-              ["Take the Tube", "Ride the Circle or Hammersmith & City line to Latimer Road."],
-              ["Exit the station", "Leave Latimer Road station onto Bramley Road."],
-              ["Walk to the venue", "Follow the signs to Westway Sports Centre, W10 6RP. It's a short walk of about 5 minutes."],
-            ].map(([t, d], i) => (
-              <li key={t} className="flex gap-4">
-                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-primary font-bold text-primary">{i + 1}</span>
-                <div><div className="font-semibold">{t}</div><div className="text-sm text-muted-foreground">{d}</div></div>
-              </li>
-            ))}
-          </ol>
-          <a href={`https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent("Latimer Road Station, London")}&destination=${encodeURIComponent(VENUE)}&travelmode=walking`} target="_blank" rel="noreferrer" className="mt-8 inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 font-bold text-primary-foreground transition hover:scale-105 active:scale-95"><Footprints className="h-5 w-5" />Walking route from the station</a>
         </div>
       </section>
 
@@ -213,5 +235,14 @@ function Index() {
         <p className="mt-2 text-primary">#JCTGBTGUK #JCtGbtgMain #JCTGBTG</p>
       </footer>
     </main>
+  );
+}
+
+function Roundel({ small = false }: { small?: boolean }) {
+  const size = small ? "h-9 w-9 border-[6px]" : "h-12 w-12 border-[8px]";
+  return (
+    <span className={`relative grid ${size} shrink-0 place-items-center rounded-full border-tfl-red bg-tfl-white`}>
+      <span className={`absolute ${small ? "h-2.5 -inset-x-2" : "h-3.5 -inset-x-3"} rounded-sm bg-tfl-blue`} />
+    </span>
   );
 }

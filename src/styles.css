@@ -95,6 +95,12 @@
   --ring: oklch(0.8 0.15 80);
   --chart-1: oklch(0.8 0.15 80); --chart-2: oklch(0.68 0.19 45); --chart-3: oklch(0.38 0.09 40); --chart-4: oklch(0.9 0.1 90); --chart-5: oklch(0.5 0.1 40);
   --sidebar: oklch(0.2 0.03 45); --sidebar-foreground: oklch(0.96 0.02 80); --sidebar-primary: oklch(0.8 0.15 80); --sidebar-primary-foreground: oklch(0.2 0.04 45); --sidebar-accent: oklch(0.24 0.04 45); --sidebar-accent-foreground: oklch(0.96 0.02 80); --sidebar-border: oklch(0.8 0.15 80 / 25%); --sidebar-ring: oklch(0.8 0.15 80);
+  --tfl-red: oklch(0.55 0.22 27);
+  --tfl-blue: oklch(0.32 0.14 265);
+  --tube-circle: oklch(0.86 0.17 95);
+  --tube-hc: oklch(0.75 0.11 0);
+  --tfl-white: oklch(0.99 0 0);
+  --tfl-ink: oklch(0.2 0.02 265);
   --gradient-gold: linear-gradient(135deg, oklch(0.9 0.12 90), oklch(0.78 0.16 75) 50%, oklch(0.66 0.18 50));
   --gradient-ember: linear-gradient(180deg, oklch(0.16 0.03 45 / 0.1), oklch(0.16 0.03 45 / 0.7) 60%, oklch(0.16 0.03 45));
   --shadow-glow: 0 0 60px -10px oklch(0.78 0.16 70 / 0.6);
@@ -105,6 +111,12 @@
   --font-sans: "Manrope", system-ui, sans-serif;
   --color-paper: var(--card);
   --color-ember: var(--secondary);
+  --color-tfl-red: var(--tfl-red);
+  --color-tfl-blue: var(--tfl-blue);
+  --color-tube-circle: var(--tube-circle);
+  --color-tube-hc: var(--tube-hc);
+  --color-tfl-white: var(--tfl-white);
+  --color-tfl-ink: var(--tfl-ink);
 }
 
 @utility text-gold {
