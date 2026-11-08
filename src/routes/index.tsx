@@ -68,7 +68,7 @@ function Index() {
   const [praised, setPraised] = useState(0);
 
   async function share() {
-    const data = { title: "Thanksgiving Service — JCTGBTG UK", text: "Join us Sun 6 Dec 2026, 11 AM at Westway Sports Centre W10 6RP!", url: window.location.href };
+    const data = { title: "Thanksgiving Service — JCTGBTG UK", text: "Kapatid, tara na! Join us Sun 6 Dec 2026, 11 AM at Westway Sports Centre W10 6RP!", url: window.location.href };
     if (navigator.share) { try { await navigator.share(data); } catch { /* cancelled */ } }
     else { await navigator.clipboard.writeText(`${data.text} ${data.url}`); setCopied(true); setTimeout(() => setCopied(false), 2000); }
   }
@@ -85,7 +85,7 @@ function Index() {
         ))}
         <div className="relative z-10 flex flex-col items-center">
           <img src={logo.url} alt="Jesus Christ To God Be The Glory" className="w-72 sm:w-[28rem] rounded-xl bg-paper p-3 shadow-glow animate-rise" />
-          <p className="mt-8 text-xs sm:text-sm uppercase tracking-[0.4em] text-primary animate-rise" style={{ animationDelay: ".15s" }}>You're invited</p>
+          <p className="mt-8 text-xs sm:text-sm uppercase tracking-[0.4em] text-primary animate-rise" style={{ animationDelay: ".15s" }}>Kapatid, you're invited!</p>
           <h1 className="font-display mt-3 text-6xl sm:text-8xl md:text-9xl font-light leading-[0.9] animate-rise" style={{ animationDelay: ".3s" }}>
             Thanks<br /><span className="italic font-semibold text-gold">giving</span>
           </h1>
@@ -95,7 +95,7 @@ function Index() {
             <span className="rounded-full border border-border bg-background/50 backdrop-blur px-5 py-2 font-semibold">11 AM Onwards</span>
           </div>
           <a href="#details" className="mt-10 rounded-full bg-gold px-8 py-4 font-extrabold text-primary-foreground shadow-glow transition hover:scale-105 active:scale-95">
-            Join the celebration
+            Tara, join us!
           </a>
         </div>
       </section>
@@ -135,6 +135,17 @@ function Index() {
             <a href={MAPS} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 rounded-full bg-ember px-5 py-3 font-semibold text-secondary-foreground transition hover:scale-105 active:scale-95"><Navigation className="h-5 w-5" />Get directions</a>
             <button onClick={share} className="flex items-center justify-center gap-2 rounded-full bg-ember px-5 py-3 font-semibold text-secondary-foreground transition hover:scale-105 active:scale-95"><Share2 className="h-5 w-5" />{copied ? "Link copied!" : "Invite a friend"}</button>
           </div>
+        </div>
+      </section>
+
+      {/* Taglish invitation */}
+      <section className="px-5 pb-20 text-center">
+        <p className="text-sm uppercase tracking-[0.3em] text-primary">Isang paanyaya</p>
+        <h2 className="font-display mt-3 text-4xl sm:text-5xl">Halina't <span className="italic text-gold">magpasalamat</span> together!</h2>
+        <div className="mx-auto mt-8 max-w-2xl space-y-4 text-base sm:text-lg leading-relaxed">
+          <p>Mga kapatid, sobrang daming blessings ang binigay ni Lord this year — kaya let's come together as one family and give Him all the glory! 🙌</p>
+          <p>Bring your family, friends, and buong barkada. Sama-sama tayong mag-worship, mag-celebrate, at mag-praise sa Panginoon na hindi tayo pinabayaan.</p>
+          <p className="font-semibold text-primary">See you there, ha? Hindi kumpleto kung wala ka! 🤍✨</p>
         </div>
       </section>
 
