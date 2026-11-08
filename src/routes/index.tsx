@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Facebook, Footprints, CalendarPlus, Clock, MapPin, Share2, Navigation, Heart, Music, HandHeart, Users } from "lucide-react";
 import hero from "@/assets/worship-hero.jpg";
 import fam1 from "@/assets/church_family_photo_1.jpg.asset.json";
@@ -41,46 +41,6 @@ function useCountdown() {
   };
 }
 
-function useScrollFx() {
-  const progressRef = useRef<HTMLDivElement>(null);
-  const heroRef = useRef<HTMLImageElement>(null);
-  const titleRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    let frame = 0;
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => {
-      frame = 0;
-      const y = Math.max(0, window.scrollY);
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      if (progressRef.current) progressRef.current.style.transform = `scaleX(${max > 0 ? Math.min(1, y / max) : 0})`;
-      const offset = reducedMotion.matches ? 0 : Math.min(y, window.innerHeight);
-      if (heroRef.current) heroRef.current.style.transform = `translateY(${offset * 0.2}px) scale(${1 + offset * 0.00015})`;
-      if (titleRef.current) {
-        titleRef.current.style.transform = `translateY(${offset * -0.1}px)`;
-        titleRef.current.style.opacity = String(reducedMotion.matches ? 1 : Math.max(0, 1 - offset / 800));
-      }
-    };
-    const onScroll = () => { if (!frame) frame = window.requestAnimationFrame(update); };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    const targets = document.querySelectorAll("main > section:not(:first-child), main > footer, [data-stagger]");
-    targets.forEach((el) => el.classList.add(el.hasAttribute("data-stagger") ? "reveal-kids" : "reveal"));
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }),
-      { threshold: 0, rootMargin: "0px 0px -20px 0px" },
-    );
-    targets.forEach((el) => io.observe(el));
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      window.cancelAnimationFrame(frame);
-      io.disconnect();
-    };
-  }, []);
-  return { progressRef, heroRef, titleRef };
-}
-
 function downloadIcs() {
   const ics = [
     "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//JCTGBTG UK//EN", "BEGIN:VEVENT",
@@ -104,9 +64,25 @@ const programme = [
   { icon: Users, title: "Fellowship", text: "Celebrate together as one family in Christ." },
 ];
 
-function Index() {
+function Countdown() {
   const c = useCountdown();
-  const { progressRef, heroRef, titleRef } = useScrollFx();
+  return (
+    <section className="px-5 py-20 sm:py-28 bg-muted">
+        <p className="text-center text-base sm:text-xl font-semibold uppercase tracking-[0.35em] text-muted-foreground">Counting down to glory</p>
+        <div className="mx-auto mt-3 h-px w-24 bg-gold/50" />
+        <div className="mx-auto mt-10 grid max-w-5xl grid-cols-2 gap-3 sm:mt-14 sm:grid-cols-4 sm:gap-5">
+          {([["Days", c.days], ["Hours", c.hours], ["Mins", c.mins], ["Secs", c.secs]] as const).map(([l, v]) => (
+            <div key={l} className="rounded-3xl border border-border bg-background px-3 py-8 text-center shadow-glow sm:px-6 sm:py-12">
+              <div className="font-display text-6xl font-semibold leading-none text-gold tabular-nums sm:text-7xl md:text-8xl">{c.ready ? String(v).padStart(2, "0") : "--"}</div>
+              <div className="mt-3 text-xs font-bold uppercase tracking-[0.25em] text-muted-foreground sm:mt-5 sm:text-sm">{l}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+  );
+}
+
+function Index() {
   const [copied, setCopied] = useState(false);
   const [praised, setPraised] = useState(0);
 
@@ -117,26 +93,21 @@ function Index() {
   }
 
   return (
-    <main className="overflow-x-hidden">
-      <div ref={progressRef} className="pointer-events-none fixed inset-x-0 top-0 z-50 h-1 origin-left scale-x-0 bg-gold shadow-glow" />
+    <main className="overflow-x-clip">
       {/* Hero */}
       <section className="relative min-h-[100svh] flex flex-col items-center justify-center px-5 py-16 text-center overflow-hidden">
-        <img ref={heroRef} src={hero} alt="Worshippers raising hands in golden light" width={1280} height={1600} className="absolute inset-0 h-full w-full object-cover will-change-transform" />
+        <img src={hero} alt="Worshippers raising hands in golden light" width={1280} height={1600} className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-ember-fade" />
-        {Array.from({ length: 14 }).map((_, i) => (
-          <span key={i} className="absolute h-1.5 w-1.5 rounded-full bg-primary animate-floaty shadow-glow"
-            style={{ left: `${(i * 37) % 100}%`, top: `${20 + ((i * 53) % 60)}%`, animationDelay: `${i * 0.4}s` }} />
-        ))}
-        <div ref={titleRef} className="relative z-10 flex flex-col items-center">
-          <img src={logo.url} alt="Jesus Christ To God Be The Glory" className="w-72 sm:w-[28rem] rounded-xl bg-paper p-3 shadow-glow animate-rise" />
-          <p className="mt-8 text-xs sm:text-sm uppercase tracking-[0.4em] text-primary animate-rise" style={{ animationDelay: ".15s" }}>Kapatid, you're invited!</p>
-          <h1 className="font-display mt-3 text-6xl sm:text-8xl md:text-9xl font-light leading-[0.9] animate-rise" style={{ animationDelay: ".3s" }}>
+        <div className="relative z-10 flex flex-col items-center">
+          <img src={logo.url} alt="Jesus Christ To God Be The Glory" className="w-72 sm:w-[28rem] rounded-xl bg-paper p-3 shadow-glow" />
+          <p className="mt-8 text-xs sm:text-sm uppercase tracking-[0.4em] text-primary">Kapatid, you're invited!</p>
+          <h1 className="font-display mt-3 text-6xl sm:text-8xl md:text-9xl font-light leading-[0.9]">
             Thanks<br /><span className="italic font-semibold text-gold">giving</span>
           </h1>
-          <p className="mt-3 tracking-[0.5em] text-lg sm:text-2xl font-light animate-rise" style={{ animationDelay: ".45s" }}>SERVICE</p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3 animate-rise" style={{ animationDelay: ".6s" }}>
-            <span className="rounded-full border border-border bg-background/50 backdrop-blur px-5 py-2 font-semibold">Sun 6 December 2026</span>
-            <span className="rounded-full border border-border bg-background/50 backdrop-blur px-5 py-2 font-semibold">11 AM Onwards</span>
+          <p className="mt-3 tracking-[0.5em] text-lg sm:text-2xl font-light">SERVICE</p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <span className="rounded-full border border-border bg-background/50 px-5 py-2 font-semibold">Sun 6 December 2026</span>
+            <span className="rounded-full border border-border bg-background/50 px-5 py-2 font-semibold">11 AM Onwards</span>
           </div>
           <a href="#details" className="mt-10 rounded-full bg-gold px-8 py-4 font-extrabold text-primary-foreground shadow-glow transition hover:scale-105 active:scale-95">
             Tara, join us!
@@ -144,19 +115,7 @@ function Index() {
         </div>
       </section>
 
-      {/* Countdown */}
-      <section className="px-5 py-20 sm:py-28 bg-muted">
-        <p className="text-center text-base sm:text-xl font-semibold uppercase tracking-[0.35em] text-muted-foreground">Counting down to glory</p>
-        <div className="mx-auto mt-3 h-px w-24 bg-gold/50" />
-        <div data-stagger className="mx-auto mt-10 grid max-w-5xl grid-cols-2 gap-3 sm:mt-14 sm:grid-cols-4 sm:gap-5">
-          {([["Days", c.days], ["Hours", c.hours], ["Mins", c.mins], ["Secs", c.secs]] as const).map(([l, v]) => (
-            <div key={l} className="rounded-3xl border border-border bg-background px-3 py-8 text-center shadow-glow sm:px-6 sm:py-12">
-              <div className="font-display text-6xl font-semibold leading-none text-gold tabular-nums sm:text-7xl md:text-8xl">{c.ready ? String(v).padStart(2, "0") : "--"}</div>
-              <div className="mt-3 text-xs font-bold uppercase tracking-[0.25em] text-muted-foreground sm:mt-5 sm:text-sm">{l}</div>
-            </div>
-          ))}
-        </div>
-      </section>
+      <Countdown />
 
       {/* Details card */}
       <section id="details" className="px-5 py-20">
@@ -192,7 +151,7 @@ function Index() {
           <p>Bring your family, friends, and buong barkada. Sama-sama tayong mag-worship, mag-celebrate, at mag-praise sa Panginoon na hindi tayo pinabayaan.</p>
           <p className="font-semibold text-primary">See you there, ha? Hindi kumpleto kung wala ka! 🤍✨</p>
         </div>
-        <div data-stagger className="mx-auto mt-10 grid max-w-4xl gap-4 sm:grid-cols-2">
+        <div className="mx-auto mt-10 grid max-w-4xl gap-4 sm:grid-cols-2">
           {[fam1, fam2].map((f, i) => (
             <figure key={f.url} className={`overflow-hidden rounded-2xl border border-border shadow-glow transition duration-500 hover:scale-[1.02] ${i ? "sm:rotate-1" : "sm:-rotate-1"}`}>
               <img src={f.url} alt="Our JCTGBTG UK church family together at Westway Sports Centre" loading="lazy" className="aspect-[4/3] w-full object-cover" />
@@ -205,7 +164,7 @@ function Index() {
       {/* Programme */}
       <section className="px-5 pb-20">
         <h2 className="font-display text-center text-4xl sm:text-5xl">A day of <span className="italic text-gold">celebration</span></h2>
-        <div data-stagger className="mx-auto mt-10 grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto mt-10 grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {programme.map(({ icon: Icon, title, text }) => (
             <div key={title} className="group rounded-2xl border border-border bg-muted p-6 transition hover:-translate-y-1 hover:shadow-glow">
               <div className="grid h-12 w-12 place-items-center rounded-full bg-gold text-primary-foreground transition group-hover:rotate-12"><Icon className="h-6 w-6" /></div>
@@ -244,7 +203,7 @@ function Index() {
             </div>
 
             {/* Line diagram */}
-            <ol data-stagger className="relative mt-8 ml-3">
+            <ol className="relative mt-8 ml-3">
               <span className="absolute left-[7px] top-2 bottom-2 w-2 -translate-x-1/2 rounded bg-gradient-to-b from-tube-circle to-tube-hc" />
               {[
                 ["Take the Tube", "Circle or Hammersmith & City line to Latimer Road."],

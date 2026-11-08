@@ -131,11 +131,6 @@
 @utility torn {
   clip-path: polygon(0 3%,4% 0,9% 2%,15% 0,22% 3%,30% 1%,37% 3%,45% 0,52% 2%,60% 0,68% 3%,75% 1%,83% 3%,90% 0,96% 2%,100% 0,99% 25%,100% 50%,98% 75%,100% 97%,94% 100%,88% 97%,80% 100%,72% 98%,64% 100%,56% 97%,48% 100%,40% 98%,32% 100%,24% 97%,16% 100%,8% 98%,0 100%,2% 75%,0 50%,1% 25%);
 }
-@keyframes floaty { 0%,100% { transform: translateY(0); opacity:.5 } 50% { transform: translateY(-30px); opacity:1 } }
-@utility animate-floaty { animation: floaty 6s ease-in-out infinite; }
-@keyframes rise { from { opacity:0; transform: translateY(24px) } to { opacity:1; transform:none } }
-@utility animate-rise { animation: rise .9s cubic-bezier(.2,.7,.2,1) both; }
-
 @layer base {
   * {
     border-color: var(--color-border);
@@ -146,19 +141,6 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
   }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: auto; }
 }
 
-/* Scroll-reveal effects (classes added at runtime) */
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1); }
-.reveal.in { opacity: 1; transform: none; filter: none; }
-.reveal-kids > * { opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
-.reveal-kids.in > * { opacity: 1; transform: none; }
-.reveal-kids.in > *:nth-child(2) { transition-delay: .12s; }
-.reveal-kids.in > *:nth-child(3) { transition-delay: .24s; }
-.reveal-kids.in > *:nth-child(4) { transition-delay: .36s; }
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .animate-floaty, .animate-rise { animation: none; }
-  .reveal, .reveal-kids > * { opacity: 1; transform: none; filter: none; transition: none; }
-}
