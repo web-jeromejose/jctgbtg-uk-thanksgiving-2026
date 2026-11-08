@@ -30,3 +30,4 @@ use the editor.
 <!-- LOVABLE:END -->
 
 - Keep scroll effects frame-scheduled with DOM refs rather than page-wide React state updates; embedded maps must not capture page scrolling, with directions available through external links.
+- Keep the live countdown in its own component so its timer does not re-render the rest of the invitation page.
