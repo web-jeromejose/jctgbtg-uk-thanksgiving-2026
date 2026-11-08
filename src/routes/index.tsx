@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Footprints, CalendarPlus, Clock, MapPin, Share2, Navigation, Heart, Music, HandHeart, Users } from "lucide-react";
 import hero from "@/assets/worship-hero.jpg";
+import fam1 from "@/assets/church_family_photo_1.jpg.asset.json";
+import fam2 from "@/assets/church_family_photo_2.jpg.asset.json";
 import logo from "@/assets/jctgbtg-banner.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
@@ -147,6 +149,14 @@ function Index() {
           <p>Bring your family, friends, and buong barkada. Sama-sama tayong mag-worship, mag-celebrate, at mag-praise sa Panginoon na hindi tayo pinabayaan.</p>
           <p className="font-semibold text-primary">See you there, ha? Hindi kumpleto kung wala ka! 🤍✨</p>
         </div>
+        <div className="mx-auto mt-10 grid max-w-4xl gap-4 sm:grid-cols-2">
+          {[fam1, fam2].map((f, i) => (
+            <figure key={f.url} className={`overflow-hidden rounded-2xl border border-border shadow-glow transition duration-500 hover:scale-[1.02] ${i ? "sm:rotate-1" : "sm:-rotate-1"}`}>
+              <img src={f.url} alt="Our JCTGBTG UK church family together at Westway Sports Centre" loading="lazy" className="aspect-[4/3] w-full object-cover" />
+            </figure>
+          ))}
+        </div>
+        <p className="mt-4 text-sm text-muted-foreground">Ang ating church family 💛</p>
       </section>
 
       {/* Programme */}
