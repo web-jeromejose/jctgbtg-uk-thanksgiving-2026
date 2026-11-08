@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Facebook, Footprints, CalendarPlus, Clock, MapPin, Share2, Navigation, Heart, Music, HandHeart, Users } from "lucide-react";
 import hero from "@/assets/worship-hero.jpg";
 import fam1 from "@/assets/church_family_photo_1.jpg.asset.json";
@@ -42,26 +42,43 @@ function useCountdown() {
 }
 
 function useScrollFx() {
-  const [y, setY] = useState(0);
-  const [progress, setProgress] = useState(0);
+  const progressRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLImageElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const onScroll = () => {
-      setY(window.scrollY);
+    let frame = 0;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => {
+      frame = 0;
+      const y = Math.max(0, window.scrollY);
       const max = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(max > 0 ? window.scrollY / max : 0);
+      if (progressRef.current) progressRef.current.style.transform = `scaleX(${max > 0 ? Math.min(1, y / max) : 0})`;
+      const offset = reducedMotion.matches ? 0 : Math.min(y, window.innerHeight);
+      if (heroRef.current) heroRef.current.style.transform = `translateY(${offset * 0.2}px) scale(${1 + offset * 0.00015})`;
+      if (titleRef.current) {
+        titleRef.current.style.transform = `translateY(${offset * -0.1}px)`;
+        titleRef.current.style.opacity = String(reducedMotion.matches ? 1 : Math.max(0, 1 - offset / 800));
+      }
     };
-    onScroll();
+    const onScroll = () => { if (!frame) frame = window.requestAnimationFrame(update); };
+    update();
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
     const targets = document.querySelectorAll("main > section:not(:first-child), main > footer, [data-stagger]");
     targets.forEach((el) => el.classList.add(el.hasAttribute("data-stagger") ? "reveal-kids" : "reveal"));
     const io = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }),
-      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" },
+      { threshold: 0, rootMargin: "0px 0px -20px 0px" },
     );
     targets.forEach((el) => io.observe(el));
-    return () => { window.removeEventListener("scroll", onScroll); io.disconnect(); };
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      window.cancelAnimationFrame(frame);
+      io.disconnect();
+    };
   }, []);
-  return { y, progress };
+  return { progressRef, heroRef, titleRef };
 }
 
 function downloadIcs() {
@@ -89,7 +106,7 @@ const programme = [
 
 function Index() {
   const c = useCountdown();
-  const { y, progress } = useScrollFx();
+  const { progressRef, heroRef, titleRef } = useScrollFx();
   const [copied, setCopied] = useState(false);
   const [praised, setPraised] = useState(0);
 
@@ -101,16 +118,16 @@ function Index() {
 
   return (
     <main className="overflow-x-hidden">
-      <div className="fixed inset-x-0 top-0 z-50 h-1 origin-left bg-gold shadow-glow" style={{ transform: `scaleX(${progress})` }} />
+      <div ref={progressRef} className="pointer-events-none fixed inset-x-0 top-0 z-50 h-1 origin-left scale-x-0 bg-gold shadow-glow" />
       {/* Hero */}
       <section className="relative min-h-[100svh] flex flex-col items-center justify-center px-5 py-16 text-center overflow-hidden">
-        <img src={hero} alt="Worshippers raising hands in golden light" width={1280} height={1600} className="absolute inset-0 h-full w-full object-cover will-change-transform" style={{ transform: `translateY(${y * 0.35}px) scale(${1 + y * 0.0003})` }} />
+        <img ref={heroRef} src={hero} alt="Worshippers raising hands in golden light" width={1280} height={1600} className="absolute inset-0 h-full w-full object-cover will-change-transform" />
         <div className="absolute inset-0 bg-ember-fade" />
         {Array.from({ length: 14 }).map((_, i) => (
           <span key={i} className="absolute h-1.5 w-1.5 rounded-full bg-primary animate-floaty shadow-glow"
             style={{ left: `${(i * 37) % 100}%`, top: `${20 + ((i * 53) % 60)}%`, animationDelay: `${i * 0.4}s` }} />
         ))}
-        <div className="relative z-10 flex flex-col items-center" style={{ transform: `translateY(${y * -0.15}px)`, opacity: Math.max(0, 1 - y / 600) }}>
+        <div ref={titleRef} className="relative z-10 flex flex-col items-center">
           <img src={logo.url} alt="Jesus Christ To God Be The Glory" className="w-72 sm:w-[28rem] rounded-xl bg-paper p-3 shadow-glow animate-rise" />
           <p className="mt-8 text-xs sm:text-sm uppercase tracking-[0.4em] text-primary animate-rise" style={{ animationDelay: ".15s" }}>Kapatid, you're invited!</p>
           <h1 className="font-display mt-3 text-6xl sm:text-8xl md:text-9xl font-light leading-[0.9] animate-rise" style={{ animationDelay: ".3s" }}>
@@ -252,7 +269,7 @@ function Index() {
       {/* Map */}
       <section className="px-5 pb-20">
         <div className="mx-auto max-w-5xl overflow-hidden rounded-3xl border border-border">
-          <iframe title="Westway Sports Centre map" src={`https://maps.google.com/maps?q=${encodeURIComponent(VENUE)}&z=15&output=embed`} className="h-72 sm:h-96 w-full" loading="lazy" />
+          <iframe title="Westway Sports Centre map" src={`https://maps.google.com/maps?q=${encodeURIComponent(VENUE)}&z=15&output=embed`} className="pointer-events-none h-72 sm:h-96 w-full" tabIndex={-1} loading="lazy" />
         </div>
       </section>
 
