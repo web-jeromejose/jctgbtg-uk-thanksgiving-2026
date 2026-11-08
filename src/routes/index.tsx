@@ -103,7 +103,7 @@ function Index() {
     <main className="overflow-x-hidden">
       <div className="fixed inset-x-0 top-0 z-50 h-1 origin-left bg-gold shadow-glow" style={{ transform: `scaleX(${progress})` }} />
       {/* Hero */}
-      <section className="relative min-h-[100svh] flex flex-col items-center justify-center px-5 py-16 text-center">
+      <section className="relative min-h-[100svh] flex flex-col items-center justify-center px-5 py-16 text-center overflow-hidden">
         <img src={hero} alt="Worshippers raising hands in golden light" width={1280} height={1600} className="absolute inset-0 h-full w-full object-cover will-change-transform" style={{ transform: `translateY(${y * 0.35}px) scale(${1 + y * 0.0003})` }} />
         <div className="absolute inset-0 bg-ember-fade" />
         {Array.from({ length: 14 }).map((_, i) => (
