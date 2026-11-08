@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { CalendarPlus, Clock, MapPin, Share2, Navigation, Heart, Music, HandHeart, Users } from "lucide-react";
 import hero from "@/assets/worship-hero.jpg";
-import logo from "@/assets/jctgbtg-logo.png.asset.json";
+import logo from "@/assets/jctgbtg-banner.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -84,7 +84,7 @@ function Index() {
             style={{ left: `${(i * 37) % 100}%`, top: `${20 + ((i * 53) % 60)}%`, animationDelay: `${i * 0.4}s` }} />
         ))}
         <div className="relative z-10 flex flex-col items-center">
-          <img src={logo.url} alt="Jesus Christ To God Be The Glory" className="w-56 sm:w-72 rounded-sm shadow-glow animate-rise" />
+          <img src={logo.url} alt="Jesus Christ To God Be The Glory" className="w-72 sm:w-[28rem] rounded-xl bg-paper p-3 shadow-glow animate-rise" />
           <p className="mt-8 text-xs sm:text-sm uppercase tracking-[0.4em] text-primary animate-rise" style={{ animationDelay: ".15s" }}>You're invited</p>
           <h1 className="font-display mt-3 text-6xl sm:text-8xl md:text-9xl font-light leading-[0.9] animate-rise" style={{ animationDelay: ".3s" }}>
             Thanks<br /><span className="italic font-semibold text-gold">giving</span>
@@ -169,6 +169,7 @@ function Index() {
       </section>
 
       <footer className="border-t border-border px-5 py-8 text-center text-sm text-muted-foreground">
+        <img src={logo.url} alt="Jesus Christ To God Be The Glory, London" loading="lazy" className="mx-auto mb-4 w-64 rounded-lg bg-paper p-2" />
         <p className="font-semibold text-foreground">Jesus Christ To God Be The Glory, Satellite Church UK</p>
         <p className="mt-2 text-primary">#JCTGBTGUK #JCtGbtgMain #JCTGBTG</p>
       </footer>
