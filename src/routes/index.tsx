@@ -41,6 +41,29 @@ function useCountdown() {
   };
 }
 
+function useScrollFx() {
+  const [y, setY] = useState(0);
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    const onScroll = () => {
+      setY(window.scrollY);
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(max > 0 ? window.scrollY / max : 0);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    const targets = document.querySelectorAll("main > section:not(:first-child), main > footer, [data-stagger]");
+    targets.forEach((el) => el.classList.add(el.hasAttribute("data-stagger") ? "reveal-kids" : "reveal"));
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }),
+      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" },
+    );
+    targets.forEach((el) => io.observe(el));
+    return () => { window.removeEventListener("scroll", onScroll); io.disconnect(); };
+  }, []);
+  return { y, progress };
+}
+
 function downloadIcs() {
   const ics = [
     "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//JCTGBTG UK//EN", "BEGIN:VEVENT",
@@ -66,6 +89,7 @@ const programme = [
 
 function Index() {
   const c = useCountdown();
+  const { y, progress } = useScrollFx();
   const [copied, setCopied] = useState(false);
   const [praised, setPraised] = useState(0);
 
@@ -77,15 +101,16 @@ function Index() {
 
   return (
     <main className="overflow-x-hidden">
+      <div className="fixed inset-x-0 top-0 z-50 h-1 origin-left bg-gold shadow-glow" style={{ transform: `scaleX(${progress})` }} />
       {/* Hero */}
       <section className="relative min-h-[100svh] flex flex-col items-center justify-center px-5 py-16 text-center">
-        <img src={hero} alt="Worshippers raising hands in golden light" width={1280} height={1600} className="absolute inset-0 h-full w-full object-cover" />
+        <img src={hero} alt="Worshippers raising hands in golden light" width={1280} height={1600} className="absolute inset-0 h-full w-full object-cover will-change-transform" style={{ transform: `translateY(${y * 0.35}px) scale(${1 + y * 0.0003})` }} />
         <div className="absolute inset-0 bg-ember-fade" />
         {Array.from({ length: 14 }).map((_, i) => (
           <span key={i} className="absolute h-1.5 w-1.5 rounded-full bg-primary animate-floaty shadow-glow"
             style={{ left: `${(i * 37) % 100}%`, top: `${20 + ((i * 53) % 60)}%`, animationDelay: `${i * 0.4}s` }} />
         ))}
-        <div className="relative z-10 flex flex-col items-center">
+        <div className="relative z-10 flex flex-col items-center" style={{ transform: `translateY(${y * -0.15}px)`, opacity: Math.max(0, 1 - y / 600) }}>
           <img src={logo.url} alt="Jesus Christ To God Be The Glory" className="w-72 sm:w-[28rem] rounded-xl bg-paper p-3 shadow-glow animate-rise" />
           <p className="mt-8 text-xs sm:text-sm uppercase tracking-[0.4em] text-primary animate-rise" style={{ animationDelay: ".15s" }}>Kapatid, you're invited!</p>
           <h1 className="font-display mt-3 text-6xl sm:text-8xl md:text-9xl font-light leading-[0.9] animate-rise" style={{ animationDelay: ".3s" }}>
@@ -105,7 +130,7 @@ function Index() {
       {/* Countdown */}
       <section className="px-5 py-16 bg-muted">
         <p className="text-center text-sm uppercase tracking-[0.3em] text-muted-foreground">Counting down to glory</p>
-        <div className="mx-auto mt-6 grid max-w-2xl grid-cols-4 gap-2 sm:gap-4">
+        <div data-stagger className="mx-auto mt-6 grid max-w-2xl grid-cols-4 gap-2 sm:gap-4">
           {([["Days", c.days], ["Hours", c.hours], ["Mins", c.mins], ["Secs", c.secs]] as const).map(([l, v]) => (
             <div key={l} className="rounded-2xl border border-border bg-background p-3 sm:p-6 text-center">
               <div className="font-display text-3xl sm:text-5xl font-semibold text-gold tabular-nums">{c.ready ? String(v).padStart(2, "0") : "--"}</div>
@@ -149,7 +174,7 @@ function Index() {
           <p>Bring your family, friends, and buong barkada. Sama-sama tayong mag-worship, mag-celebrate, at mag-praise sa Panginoon na hindi tayo pinabayaan.</p>
           <p className="font-semibold text-primary">See you there, ha? Hindi kumpleto kung wala ka! 🤍✨</p>
         </div>
-        <div className="mx-auto mt-10 grid max-w-4xl gap-4 sm:grid-cols-2">
+        <div data-stagger className="mx-auto mt-10 grid max-w-4xl gap-4 sm:grid-cols-2">
           {[fam1, fam2].map((f, i) => (
             <figure key={f.url} className={`overflow-hidden rounded-2xl border border-border shadow-glow transition duration-500 hover:scale-[1.02] ${i ? "sm:rotate-1" : "sm:-rotate-1"}`}>
               <img src={f.url} alt="Our JCTGBTG UK church family together at Westway Sports Centre" loading="lazy" className="aspect-[4/3] w-full object-cover" />
@@ -162,7 +187,7 @@ function Index() {
       {/* Programme */}
       <section className="px-5 pb-20">
         <h2 className="font-display text-center text-4xl sm:text-5xl">A day of <span className="italic text-gold">celebration</span></h2>
-        <div className="mx-auto mt-10 grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div data-stagger className="mx-auto mt-10 grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {programme.map(({ icon: Icon, title, text }) => (
             <div key={title} className="group rounded-2xl border border-border bg-muted p-6 transition hover:-translate-y-1 hover:shadow-glow">
               <div className="grid h-12 w-12 place-items-center rounded-full bg-gold text-primary-foreground transition group-hover:rotate-12"><Icon className="h-6 w-6" /></div>
@@ -201,7 +226,7 @@ function Index() {
             </div>
 
             {/* Line diagram */}
-            <ol className="relative mt-8 ml-3">
+            <ol data-stagger className="relative mt-8 ml-3">
               <span className="absolute left-[7px] top-2 bottom-2 w-2 -translate-x-1/2 rounded bg-gradient-to-b from-tube-circle to-tube-hc" />
               {[
                 ["Take the Tube", "Circle or Hammersmith & City line to Latimer Road."],
