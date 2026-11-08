@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { CalendarPlus, Clock, MapPin, Share2, Navigation, Heart, Music, HandHeart, Users } from "lucide-react";
+import { TrainFront, Footprints, CalendarPlus, Clock, MapPin, Share2, Navigation, Heart, Music, HandHeart, Users } from "lucide-react";
 import hero from "@/assets/worship-hero.jpg";
 import logo from "@/assets/jctgbtg-banner.jpg.asset.json";
 
@@ -19,7 +19,7 @@ export const Route = createFileRoute("/")({
 });
 
 const EVENT = new Date("2026-12-05T11:00:00Z"); // London is UTC+0 in December
-const VENUE = "Westway Sports Centre, 1 Crowthorne Rd, London W10 6RP";
+const VENUE = "Westway Sports Centre, W10 6RP";
 const MAPS = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(VENUE)}`;
 
 function useCountdown() {
@@ -127,7 +127,7 @@ function Index() {
             </div>
             <div className="torn bg-ember text-secondary-foreground p-6 flex gap-4 items-center">
               <MapPin className="h-8 w-8 shrink-0 text-primary" />
-              <div><div className="font-extrabold text-lg">Westway Sports Centre</div><div className="opacity-80">London W10 6RP</div></div>
+              <div><div className="font-extrabold text-lg">Westway Sports Centre</div><div className="opacity-80">W10 6RP</div></div>
             </div>
           </div>
           <div className="mt-8 grid gap-3 sm:grid-cols-3">
@@ -149,6 +149,34 @@ function Index() {
               <p className="mt-2 text-sm text-muted-foreground">{text}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Getting here */}
+      <section className="px-5 pb-20">
+        <h2 className="font-display text-center text-4xl sm:text-5xl">Getting here by <span className="italic text-gold">Tube</span></h2>
+        <div className="mx-auto mt-10 max-w-3xl rounded-3xl border border-border bg-muted p-6 sm:p-10">
+          <div className="flex items-center gap-4">
+            <div className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-gold text-primary-foreground"><TrainFront className="h-7 w-7" /></div>
+            <div className="min-w-0"><div className="font-display text-2xl">Latimer Road Station</div><div className="text-sm text-muted-foreground">Nearest station to Westway Sports Centre</div></div>
+          </div>
+          <div className="mt-6 flex flex-wrap gap-2">
+            <span className="rounded-full bg-primary px-4 py-1.5 text-sm font-bold text-primary-foreground">Circle line</span>
+            <span className="rounded-full bg-secondary px-4 py-1.5 text-sm font-bold text-secondary-foreground">Hammersmith &amp; City line</span>
+          </div>
+          <ol className="mt-8 space-y-5">
+            {[
+              ["Take the Tube", "Ride the Circle or Hammersmith & City line to Latimer Road."],
+              ["Exit the station", "Leave Latimer Road station onto Bramley Road."],
+              ["Walk to the venue", "Follow the signs to Westway Sports Centre, W10 6RP. It's a short walk of about 5 minutes."],
+            ].map(([t, d], i) => (
+              <li key={t} className="flex gap-4">
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-primary font-bold text-primary">{i + 1}</span>
+                <div><div className="font-semibold">{t}</div><div className="text-sm text-muted-foreground">{d}</div></div>
+              </li>
+            ))}
+          </ol>
+          <a href={`https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent("Latimer Road Station, London")}&destination=${encodeURIComponent(VENUE)}&travelmode=walking`} target="_blank" rel="noreferrer" className="mt-8 inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 font-bold text-primary-foreground transition hover:scale-105 active:scale-95"><Footprints className="h-5 w-5" />Walking route from the station</a>
         </div>
       </section>
 
