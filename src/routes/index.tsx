@@ -128,13 +128,14 @@ function Index() {
       </section>
 
       {/* Countdown */}
-      <section className="px-5 py-16 bg-muted">
-        <p className="text-center text-sm uppercase tracking-[0.3em] text-muted-foreground">Counting down to glory</p>
-        <div data-stagger className="mx-auto mt-6 grid max-w-2xl grid-cols-4 gap-2 sm:gap-4">
+      <section className="px-5 py-20 sm:py-28 bg-muted">
+        <p className="text-center text-base sm:text-xl font-semibold uppercase tracking-[0.35em] text-muted-foreground">Counting down to glory</p>
+        <div className="mx-auto mt-3 h-px w-24 bg-gold/50" />
+        <div data-stagger className="mx-auto mt-10 grid max-w-5xl grid-cols-2 gap-3 sm:mt-14 sm:grid-cols-4 sm:gap-5">
           {([["Days", c.days], ["Hours", c.hours], ["Mins", c.mins], ["Secs", c.secs]] as const).map(([l, v]) => (
-            <div key={l} className="rounded-2xl border border-border bg-background p-3 sm:p-6 text-center">
-              <div className="font-display text-3xl sm:text-5xl font-semibold text-gold tabular-nums">{c.ready ? String(v).padStart(2, "0") : "--"}</div>
-              <div className="mt-1 text-[10px] sm:text-xs uppercase tracking-widest text-muted-foreground">{l}</div>
+            <div key={l} className="rounded-3xl border border-border bg-background px-3 py-8 text-center shadow-glow sm:px-6 sm:py-12">
+              <div className="font-display text-6xl font-semibold leading-none text-gold tabular-nums sm:text-7xl md:text-8xl">{c.ready ? String(v).padStart(2, "0") : "--"}</div>
+              <div className="mt-3 text-xs font-bold uppercase tracking-[0.25em] text-muted-foreground sm:mt-5 sm:text-sm">{l}</div>
             </div>
           ))}
         </div>
