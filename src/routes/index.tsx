@@ -8,9 +8,9 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Thanksgiving Service 2026 — JCTGBTG UK" },
-      { name: "description", content: "Join Jesus Christ To God Be The Glory UK for our Thanksgiving Service on Saturday 5 December 2026, 11 AM at Westway Sports Centre, W10 6RP." },
+      { name: "description", content: "Join Jesus Christ To God Be The Glory UK for our Thanksgiving Service on Sunday 6 December 2026, 11 AM at Westway Sports Centre, W10 6RP." },
       { property: "og:title", content: "Thanksgiving Service 2026 — JCTGBTG UK" },
-      { property: "og:description", content: "Saturday 5 December 2026 · 11 AM onwards · Westway Sports Centre, W10 6RP. You're invited!" },
+      { property: "og:description", content: "Sunday 6 December 2026 · 11 AM onwards · Westway Sports Centre, W10 6RP. You're invited!" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -18,7 +18,7 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const EVENT = new Date("2026-12-05T11:00:00Z"); // London is UTC+0 in December
+const EVENT = new Date("2026-12-06T11:00:00Z"); // London is UTC+0 in December
 const VENUE = "Westway Sports Centre, W10 6RP";
 const MAPS = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(VENUE)}`;
 
@@ -43,7 +43,7 @@ function downloadIcs() {
   const ics = [
     "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//JCTGBTG UK//EN", "BEGIN:VEVENT",
     "UID:thanksgiving-2026@jctgbtg", "DTSTAMP:20261101T000000Z",
-    "DTSTART:20261205T110000Z", "DTEND:20261205T150000Z",
+    "DTSTART:20261206T110000Z", "DTEND:20261206T150000Z",
     "SUMMARY:Thanksgiving Service — JCTGBTG UK",
     `LOCATION:${VENUE.replace(/,/g, "\\,")}`,
     "DESCRIPTION:Come together in gratitude for everything God has done.",
@@ -68,7 +68,7 @@ function Index() {
   const [praised, setPraised] = useState(0);
 
   async function share() {
-    const data = { title: "Thanksgiving Service — JCTGBTG UK", text: "Join us Sat 5 Dec 2026, 11 AM at Westway Sports Centre W10 6RP!", url: window.location.href };
+    const data = { title: "Thanksgiving Service — JCTGBTG UK", text: "Join us Sun 6 Dec 2026, 11 AM at Westway Sports Centre W10 6RP!", url: window.location.href };
     if (navigator.share) { try { await navigator.share(data); } catch { /* cancelled */ } }
     else { await navigator.clipboard.writeText(`${data.text} ${data.url}`); setCopied(true); setTimeout(() => setCopied(false), 2000); }
   }
@@ -91,7 +91,7 @@ function Index() {
           </h1>
           <p className="mt-3 tracking-[0.5em] text-lg sm:text-2xl font-light animate-rise" style={{ animationDelay: ".45s" }}>SERVICE</p>
           <div className="mt-8 flex flex-wrap justify-center gap-3 animate-rise" style={{ animationDelay: ".6s" }}>
-            <span className="rounded-full border border-border bg-background/50 backdrop-blur px-5 py-2 font-semibold">Sat 5 December 2026</span>
+            <span className="rounded-full border border-border bg-background/50 backdrop-blur px-5 py-2 font-semibold">Sun 6 December 2026</span>
             <span className="rounded-full border border-border bg-background/50 backdrop-blur px-5 py-2 font-semibold">11 AM Onwards</span>
           </div>
           <a href="#details" className="mt-10 rounded-full bg-gold px-8 py-4 font-extrabold text-primary-foreground shadow-glow transition hover:scale-105 active:scale-95">
@@ -123,7 +123,7 @@ function Index() {
           <div className="mt-10 grid gap-4 sm:grid-cols-2 text-left">
             <div className="torn bg-ember text-secondary-foreground p-6 flex gap-4 items-center">
               <Clock className="h-8 w-8 shrink-0 text-primary" />
-              <div><div className="font-extrabold text-lg">Saturday 5th December 2026</div><div className="opacity-80">11 AM onwards</div></div>
+              <div><div className="font-extrabold text-lg">Sunday 6th December 2026</div><div className="opacity-80">11 AM onwards</div></div>
             </div>
             <div className="torn bg-ember text-secondary-foreground p-6 flex gap-4 items-center">
               <MapPin className="h-8 w-8 shrink-0 text-primary" />
