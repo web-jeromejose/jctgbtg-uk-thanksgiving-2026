@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Footprints, CalendarPlus, Clock, MapPin, Share2, Navigation, Heart, Music, HandHeart, Users } from "lucide-react";
+import { Facebook, Footprints, CalendarPlus, Clock, MapPin, Share2, Navigation, Heart, Music, HandHeart, Users } from "lucide-react";
 import hero from "@/assets/worship-hero.jpg";
 import fam1 from "@/assets/church_family_photo_1.jpg.asset.json";
 import fam2 from "@/assets/church_family_photo_2.jpg.asset.json";
@@ -242,6 +242,7 @@ function Index() {
       <footer className="border-t border-border px-5 py-8 text-center text-sm text-muted-foreground">
         <img src={logo.url} alt="Jesus Christ To God Be The Glory, London" loading="lazy" className="mx-auto mb-4 w-64 rounded-lg bg-paper p-2" />
         <p className="font-semibold text-foreground">Jesus Christ To God Be The Glory, Satellite Church UK</p>
+        <a href="https://www.facebook.com/profile.php?id=100023070939887" target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 font-bold text-primary-foreground shadow-glow transition hover:scale-105 active:scale-95"><Facebook className="h-5 w-5" />Follow us on Facebook</a>
         <p className="mt-2 text-primary">#JCTGBTGUK #JCtGbtgMain #JCTGBTG</p>
       </footer>
     </main>
