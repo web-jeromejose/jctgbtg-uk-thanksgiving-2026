@@ -28,3 +28,5 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+- Keep scroll effects frame-scheduled with DOM refs rather than page-wide React state updates; embedded maps must not capture page scrolling, with directions available through external links.
