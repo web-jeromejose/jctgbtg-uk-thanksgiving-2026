@@ -225,13 +225,6 @@ function Index() {
         </div>
       </section>
 
-      {/* Map */}
-      <section className="px-5 pb-20">
-        <div className="mx-auto max-w-5xl overflow-hidden rounded-3xl border border-border">
-          <iframe title="Westway Sports Centre map" src={`https://maps.google.com/maps?q=${encodeURIComponent(VENUE)}&z=15&output=embed`} className="pointer-events-none h-72 sm:h-96 w-full" tabIndex={-1} loading="lazy" />
-        </div>
-      </section>
-
       {/* Praise */}
       <section className="px-5 pb-24 text-center">
         <p className="font-display mx-auto max-w-3xl text-3xl leading-snug sm:text-4xl italic">"Let us worship God with thankful hearts, remembering all that He has done for us."</p>
@@ -264,6 +257,13 @@ function Index() {
             allowFullScreen
             className="aspect-video w-full"
           />
+        </div>
+      </section>
+
+      {/* Map */}
+      <section className="px-5 pb-20">
+        <div className="mx-auto max-w-5xl overflow-hidden rounded-3xl border border-border">
+          <iframe title="Westway Sports Centre map" src={`https://maps.google.com/maps?q=${encodeURIComponent(VENUE)}&z=15&output=embed`} className="pointer-events-none h-72 sm:h-96 w-full" tabIndex={-1} loading="lazy" />
         </div>
       </section>
 
