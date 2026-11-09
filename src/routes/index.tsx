@@ -175,6 +175,41 @@ function Index() {
         </div>
       </section>
 
+      {/* Praise */}
+      <section className="px-5 pb-24 text-center">
+        <p className="font-display mx-auto max-w-3xl text-3xl leading-snug sm:text-4xl italic">"Let us worship God with thankful hearts, remembering all that He has done for us."</p>
+        <div className="mx-auto mt-5 h-px w-24 bg-gold/50" />
+        <p className="mt-5 text-sm font-bold uppercase tracking-[0.25em] text-muted-foreground">Psalm 9:1 · Psalm 100:4 · Psalm 103:2</p>
+        <button onClick={() => setPraised((p) => p + 1)} className="mt-8 inline-flex items-center gap-2 rounded-full border border-primary px-6 py-3 font-semibold text-primary transition hover:bg-primary hover:text-primary-foreground active:scale-90">
+          🙌 Give thanks {praised > 0 && <span className="tabular-nums">· {praised}</span>}
+        </button>
+      </section>
+
+      <DailyVerse />
+
+      {/* Worship music */}
+      <section className="px-5 pb-24 text-center">
+        <p className="text-sm font-bold uppercase tracking-[0.3em] text-primary">Praise & worship</p>
+        <h2 className="font-display mt-3 text-4xl sm:text-5xl">Worship <span className="italic text-gold">with us</span></h2>
+        <p className="mt-3 text-sm text-muted-foreground">Piano worship by Elevation Worship 🎹 — tap play if it doesn't start</p>
+        <div className="mx-auto mt-8 max-w-3xl overflow-hidden rounded-3xl border border-border shadow-glow">
+          <iframe
+            title="Elevation Worship piano playlist"
+            id="worship-player"
+            src="https://www.youtube.com/embed/wUU4E1HcCUw?list=RDwUU4E1HcCUw&autoplay=1&mute=1&playsinline=1&enablejsapi=1"
+            onLoad={(e) => {
+              const f = e.currentTarget;
+              const cmd = (func: string) => f.contentWindow?.postMessage(JSON.stringify({ event: "command", func, args: [] }), "*");
+              const unmute = () => { cmd("unMute"); cmd("setVolume"); cmd("playVideo"); ["pointerdown", "touchstart", "keydown"].forEach((ev) => window.removeEventListener(ev, unmute)); };
+              ["pointerdown", "touchstart", "keydown"].forEach((ev) => window.addEventListener(ev, unmute, { passive: true }));
+            }}
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowFullScreen
+            className="aspect-video w-full"
+          />
+        </div>
+      </section>
+
       {/* Getting here — TfL style */}
       <section className="px-5 pb-20">
         <div className="mx-auto max-w-3xl overflow-hidden rounded-2xl bg-tfl-white text-tfl-ink shadow-glow">
@@ -222,41 +257,6 @@ function Index() {
 
             <a href={`https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent("Latimer Road Station, London")}&destination=${encodeURIComponent(VENUE)}&travelmode=walking`} target="_blank" rel="noreferrer" className="mt-8 flex items-center justify-center gap-2 rounded-md bg-tfl-blue px-6 py-3 font-bold text-tfl-white transition hover:scale-[1.02] active:scale-95"><Footprints className="h-5 w-5" />Walking route from the station</a>
           </div>
-        </div>
-      </section>
-
-      {/* Praise */}
-      <section className="px-5 pb-24 text-center">
-        <p className="font-display mx-auto max-w-3xl text-3xl leading-snug sm:text-4xl italic">"Let us worship God with thankful hearts, remembering all that He has done for us."</p>
-        <div className="mx-auto mt-5 h-px w-24 bg-gold/50" />
-        <p className="mt-5 text-sm font-bold uppercase tracking-[0.25em] text-muted-foreground">Psalm 9:1 · Psalm 100:4 · Psalm 103:2</p>
-        <button onClick={() => setPraised((p) => p + 1)} className="mt-8 inline-flex items-center gap-2 rounded-full border border-primary px-6 py-3 font-semibold text-primary transition hover:bg-primary hover:text-primary-foreground active:scale-90">
-          🙌 Give thanks {praised > 0 && <span className="tabular-nums">· {praised}</span>}
-        </button>
-      </section>
-
-      <DailyVerse />
-
-      {/* Worship music */}
-      <section className="px-5 pb-24 text-center">
-        <p className="text-sm font-bold uppercase tracking-[0.3em] text-primary">Praise & worship</p>
-        <h2 className="font-display mt-3 text-4xl sm:text-5xl">Worship <span className="italic text-gold">with us</span></h2>
-        <p className="mt-3 text-sm text-muted-foreground">Piano worship by Elevation Worship 🎹 — tap play if it doesn't start</p>
-        <div className="mx-auto mt-8 max-w-3xl overflow-hidden rounded-3xl border border-border shadow-glow">
-          <iframe
-            title="Elevation Worship piano playlist"
-            id="worship-player"
-            src="https://www.youtube.com/embed/wUU4E1HcCUw?list=RDwUU4E1HcCUw&autoplay=1&mute=1&playsinline=1&enablejsapi=1"
-            onLoad={(e) => {
-              const f = e.currentTarget;
-              const cmd = (func: string) => f.contentWindow?.postMessage(JSON.stringify({ event: "command", func, args: [] }), "*");
-              const unmute = () => { cmd("unMute"); cmd("setVolume"); cmd("playVideo"); ["pointerdown", "touchstart", "keydown"].forEach((ev) => window.removeEventListener(ev, unmute)); };
-              ["pointerdown", "touchstart", "keydown"].forEach((ev) => window.addEventListener(ev, unmute, { passive: true }));
-            }}
-            allow="autoplay; encrypted-media; picture-in-picture"
-            allowFullScreen
-            className="aspect-video w-full"
-          />
         </div>
       </section>
 
