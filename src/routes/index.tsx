@@ -252,7 +252,14 @@ function Index() {
         <div className="mx-auto mt-8 max-w-3xl overflow-hidden rounded-3xl border border-border shadow-glow">
           <iframe
             title="Elevation Worship piano playlist"
-            src="https://www.youtube.com/embed/wUU4E1HcCUw?list=RDwUU4E1HcCUw&autoplay=1&playsinline=1"
+            id="worship-player"
+            src="https://www.youtube.com/embed/wUU4E1HcCUw?list=RDwUU4E1HcCUw&autoplay=1&mute=1&playsinline=1&enablejsapi=1"
+            onLoad={(e) => {
+              const f = e.currentTarget;
+              const cmd = (func: string) => f.contentWindow?.postMessage(JSON.stringify({ event: "command", func, args: [] }), "*");
+              const unmute = () => { cmd("unMute"); cmd("setVolume"); cmd("playVideo"); ["pointerdown", "touchstart", "keydown"].forEach((ev) => window.removeEventListener(ev, unmute)); };
+              ["pointerdown", "touchstart", "keydown"].forEach((ev) => window.addEventListener(ev, unmute, { passive: true }));
+            }}
             allow="autoplay; encrypted-media; picture-in-picture"
             allowFullScreen
             className="aspect-video w-full"
