@@ -31,3 +31,4 @@ use the editor.
 
 - Keep scroll effects frame-scheduled with DOM refs rather than page-wide React state updates; embedded maps must not capture page scrolling, with directions available through external links.
 - Keep the live countdown in its own component so its timer does not re-render the rest of the invitation page.
+- Verify display-font letterforms in the rendered page (crop the headline and inspect the pixels), because a webfont can serve a build whose glyphs are missing strokes that the font file alone does not reveal.
