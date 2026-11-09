@@ -244,6 +244,22 @@ function Index() {
 
       <DailyVerse />
 
+      {/* Worship music */}
+      <section className="px-5 pb-24 text-center">
+        <p className="text-sm font-bold uppercase tracking-[0.3em] text-primary">Praise & worship</p>
+        <h2 className="font-display mt-3 text-4xl sm:text-5xl">Worship <span className="italic text-gold">with us</span></h2>
+        <p className="mt-3 text-sm text-muted-foreground">Piano worship by Elevation Worship 🎹 — tap play if it doesn't start</p>
+        <div className="mx-auto mt-8 max-w-3xl overflow-hidden rounded-3xl border border-border shadow-glow">
+          <iframe
+            title="Elevation Worship piano playlist"
+            src="https://www.youtube.com/embed/wUU4E1HcCUw?list=RDwUU4E1HcCUw&autoplay=1&playsinline=1"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowFullScreen
+            className="aspect-video w-full"
+          />
+        </div>
+      </section>
+
       <footer className="border-t border-border px-5 py-8 text-center text-sm text-muted-foreground">
         <img src={logo.url} alt="Jesus Christ To God Be The Glory, London" loading="lazy" className="mx-auto mb-4 w-64 rounded-lg bg-paper p-2" />
         <p className="font-semibold text-foreground">Jesus Christ To God Be The Glory, Satellite Church UK</p>
