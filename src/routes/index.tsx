@@ -234,8 +234,9 @@ function Index() {
 
       {/* Praise */}
       <section className="px-5 pb-24 text-center">
-        <p className="font-display text-3xl sm:text-4xl italic">"Give thanks to the Lord, for He is good."</p>
-        <p className="mt-2 text-sm text-muted-foreground">Psalm 107:1</p>
+        <p className="font-display mx-auto max-w-3xl text-3xl leading-snug sm:text-4xl italic">"Let us worship God with thankful hearts, remembering all that He has done for us."</p>
+        <div className="mx-auto mt-5 h-px w-24 bg-gold/50" />
+        <p className="mt-5 text-sm font-bold uppercase tracking-[0.25em] text-muted-foreground">Psalm 9:1 · Psalm 100:4 · Psalm 103:2</p>
         <button onClick={() => setPraised((p) => p + 1)} className="mt-8 inline-flex items-center gap-2 rounded-full border border-primary px-6 py-3 font-semibold text-primary transition hover:bg-primary hover:text-primary-foreground active:scale-90">
           🙌 Give thanks {praised > 0 && <span className="tabular-nums">· {praised}</span>}
         </button>
