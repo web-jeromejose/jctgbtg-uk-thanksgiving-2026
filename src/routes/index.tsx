@@ -9,10 +9,10 @@ import logo from "@/assets/jctgbtg-banner.jpg.asset.json";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Thanksgiving Service 2026 — JCTGBTG UK" },
-      { name: "description", content: "Join Jesus Christ To God Be The Glory UK for our Thanksgiving Service on Sunday 6 December 2026, 11 AM at Westway Sports Centre, W10 6RP." },
-      { property: "og:title", content: "Thanksgiving Service 2026 — JCTGBTG UK" },
-      { property: "og:description", content: "Sunday 6 December 2026 · 11 AM onwards · Westway Sports Centre, W10 6RP. You're invited!" },
+      { title: "A Heart of Thanksgiving — Thanksgiving Service 2026, JCTGBTG UK" },
+      { name: "description", content: "A Heart of Thanksgiving: remembering His goodness, celebrating His faithfulness. Join Jesus Christ To God Be The Glory UK on Sunday 6 December 2026, 11 AM at Westway Sports Centre, W10 6RP." },
+      { property: "og:title", content: "A Heart of Thanksgiving — Thanksgiving Service 2026, JCTGBTG UK" },
+      { property: "og:description", content: "Remembering His Goodness, Celebrating His Faithfulness. Sunday 6 December 2026 · 11 AM onwards · Westway Sports Centre, W10 6RP. You're invited!" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -73,7 +73,7 @@ function Countdown() {
         <div className="mx-auto mt-10 grid max-w-5xl grid-cols-2 gap-3 sm:mt-14 sm:grid-cols-4 sm:gap-5">
           {([["Days", c.days], ["Hours", c.hours], ["Mins", c.mins], ["Secs", c.secs]] as const).map(([l, v]) => (
             <div key={l} className="rounded-3xl border border-border bg-background px-3 py-8 text-center shadow-glow sm:px-6 sm:py-12">
-              <div className="font-display text-6xl font-semibold leading-none text-gold tabular-nums sm:text-7xl md:text-8xl">{c.ready ? String(v).padStart(2, "0") : "--"}</div>
+              <div className="font-display text-6xl leading-none text-gold tabular-nums sm:text-7xl md:text-8xl">{c.ready ? String(v).padStart(2, "0") : "--"}</div>
               <div className="mt-3 text-xs font-bold uppercase tracking-[0.25em] text-muted-foreground sm:mt-5 sm:text-sm">{l}</div>
             </div>
           ))}
@@ -101,10 +101,10 @@ function Index() {
         <div className="relative z-10 flex flex-col items-center">
           <img src={logo.url} alt="Jesus Christ To God Be The Glory" className="w-72 sm:w-[28rem] rounded-xl bg-paper p-3 shadow-glow" />
           <p className="mt-8 text-xs sm:text-sm uppercase tracking-[0.4em] text-primary">Kapatid, you're invited!</p>
-          <h1 className="font-display mt-3 text-6xl sm:text-8xl md:text-9xl font-light leading-[0.9]">
-            Thanks<br /><span className="italic font-semibold text-gold">giving</span>
+          <h1 className="font-display mt-3 text-5xl sm:text-7xl md:text-8xl leading-[0.95]">
+            A Heart of<br /><span className="italic text-gold">Thanksgiving</span>
           </h1>
-          <p className="mt-3 tracking-[0.5em] text-lg sm:text-2xl font-light">SERVICE</p>
+          <p className="mt-4 max-w-xl text-sm sm:text-xl font-light italic leading-relaxed">Remembering His Goodness, Celebrating His Faithfulness</p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <span className="rounded-full border border-border bg-background/50 px-5 py-2 font-semibold">Sun 6 December 2026</span>
             <span className="rounded-full border border-border bg-background/50 px-5 py-2 font-semibold">11 AM Onwards</span>
@@ -234,8 +234,9 @@ function Index() {
 
       {/* Praise */}
       <section className="px-5 pb-24 text-center">
-        <p className="font-display text-3xl sm:text-4xl italic">"Give thanks to the Lord, for He is good."</p>
-        <p className="mt-2 text-sm text-muted-foreground">Psalm 107:1</p>
+        <p className="font-display mx-auto max-w-3xl text-3xl leading-snug sm:text-4xl italic">"Let us worship God with thankful hearts, remembering all that He has done for us."</p>
+        <div className="mx-auto mt-5 h-px w-24 bg-gold/50" />
+        <p className="mt-5 text-sm font-bold uppercase tracking-[0.25em] text-muted-foreground">Psalm 9:1 · Psalm 100:4 · Psalm 103:2</p>
         <button onClick={() => setPraised((p) => p + 1)} className="mt-8 inline-flex items-center gap-2 rounded-full border border-primary px-6 py-3 font-semibold text-primary transition hover:bg-primary hover:text-primary-foreground active:scale-90">
           🙌 Give thanks {praised > 0 && <span className="tabular-nums">· {praised}</span>}
         </button>
