@@ -101,8 +101,8 @@ function Index() {
         <div className="relative z-10 flex flex-col items-center">
           <img src={logo.url} alt="Jesus Christ To God Be The Glory" className="w-72 sm:w-[28rem] rounded-xl bg-paper p-3 shadow-glow" />
           <p className="mt-8 text-xs sm:text-sm uppercase tracking-[0.4em] text-primary">Kapatid, you're invited!</p>
-          <h1 className="font-display mt-3 text-5xl sm:text-7xl md:text-8xl font-light leading-[0.95]">
-            A Heart of<br /><span className="italic font-semibold text-gold">Thanksgiving</span>
+          <h1 className="font-display mt-3 text-5xl sm:text-7xl md:text-8xl leading-[0.95]">
+            A Heart of<br /><span className="italic text-gold">Thanksgiving</span>
           </h1>
           <p className="mt-4 max-w-xl text-sm sm:text-xl font-light italic leading-relaxed">Remembering His Goodness, Celebrating His Faithfulness</p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
