@@ -9,10 +9,10 @@ import logo from "@/assets/jctgbtg-banner.jpg.asset.json";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Thanksgiving Service 2026 — JCTGBTG UK" },
-      { name: "description", content: "Join Jesus Christ To God Be The Glory UK for our Thanksgiving Service on Sunday 6 December 2026, 11 AM at Westway Sports Centre, W10 6RP." },
-      { property: "og:title", content: "Thanksgiving Service 2026 — JCTGBTG UK" },
-      { property: "og:description", content: "Sunday 6 December 2026 · 11 AM onwards · Westway Sports Centre, W10 6RP. You're invited!" },
+      { title: "A Heart of Thanksgiving — Thanksgiving Service 2026, JCTGBTG UK" },
+      { name: "description", content: "A Heart of Thanksgiving: remembering His goodness, celebrating His faithfulness. Join Jesus Christ To God Be The Glory UK on Sunday 6 December 2026, 11 AM at Westway Sports Centre, W10 6RP." },
+      { property: "og:title", content: "A Heart of Thanksgiving — Thanksgiving Service 2026, JCTGBTG UK" },
+      { property: "og:description", content: "Remembering His Goodness, Celebrating His Faithfulness. Sunday 6 December 2026 · 11 AM onwards · Westway Sports Centre, W10 6RP. You're invited!" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -101,10 +101,10 @@ function Index() {
         <div className="relative z-10 flex flex-col items-center">
           <img src={logo.url} alt="Jesus Christ To God Be The Glory" className="w-72 sm:w-[28rem] rounded-xl bg-paper p-3 shadow-glow" />
           <p className="mt-8 text-xs sm:text-sm uppercase tracking-[0.4em] text-primary">Kapatid, you're invited!</p>
-          <h1 className="font-display mt-3 text-6xl sm:text-8xl md:text-9xl font-light leading-[0.9]">
-            Thanks<br /><span className="italic font-semibold text-gold">giving</span>
+          <h1 className="font-display mt-3 text-5xl sm:text-7xl md:text-8xl font-light leading-[0.95]">
+            A Heart of<br /><span className="italic font-semibold text-gold">Thanksgiving</span>
           </h1>
-          <p className="mt-3 tracking-[0.5em] text-lg sm:text-2xl font-light">SERVICE</p>
+          <p className="mt-4 max-w-xl text-sm sm:text-xl font-light italic leading-relaxed">Remembering His Goodness, Celebrating His Faithfulness</p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <span className="rounded-full border border-border bg-background/50 px-5 py-2 font-semibold">Sun 6 December 2026</span>
             <span className="rounded-full border border-border bg-background/50 px-5 py-2 font-semibold">11 AM Onwards</span>
