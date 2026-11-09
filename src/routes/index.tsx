@@ -273,7 +273,7 @@ function DailyVerse() {
   const [i, setI] = useState(0);
   const [copied, setCopied] = useState(false);
   useEffect(() => { setI(Math.floor(Date.now() / 864e5) % VERSES.length); }, []);
-  const [text, ref] = VERSES[i];
+  const [text, ref] = VERSES[i] ?? VERSES[0];
   const go = (d: number) => setI((n) => (n + d + VERSES.length) % VERSES.length);
   async function copy() {
     await navigator.clipboard.writeText(`"${text}" — ${ref}`);
