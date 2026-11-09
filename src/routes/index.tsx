@@ -242,6 +242,8 @@ function Index() {
         </button>
       </section>
 
+      <DailyVerse />
+
       <footer className="border-t border-border px-5 py-8 text-center text-sm text-muted-foreground">
         <img src={logo.url} alt="Jesus Christ To God Be The Glory, London" loading="lazy" className="mx-auto mb-4 w-64 rounded-lg bg-paper p-2" />
         <p className="font-semibold text-foreground">Jesus Christ To God Be The Glory, Satellite Church UK</p>
@@ -249,6 +251,52 @@ function Index() {
         <p className="mt-2 text-primary">#JCTGBTGUK #JCtGbtgMain #JCTGBTG</p>
       </footer>
     </main>
+  );
+}
+
+const VERSES = [
+  ["Give thanks to the Lord, for he is good; his love endures forever.", "Psalm 107:1"],
+  ["I can do all this through him who gives me strength.", "Philippians 4:13"],
+  ["Trust in the Lord with all your heart and lean not on your own understanding.", "Proverbs 3:5"],
+  ["For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you.", "Jeremiah 29:11"],
+  ["The Lord is my shepherd, I lack nothing.", "Psalm 23:1"],
+  ["Give thanks in all circumstances; for this is God's will for you in Christ Jesus.", "1 Thessalonians 5:18"],
+  ["Be strong and courageous. Do not be afraid; the Lord your God will be with you wherever you go.", "Joshua 1:9"],
+  ["Cast all your anxiety on him because he cares for you.", "1 Peter 5:7"],
+  ["This is the day the Lord has made; let us rejoice and be glad in it.", "Psalm 118:24"],
+  ["And we know that in all things God works for the good of those who love him.", "Romans 8:28"],
+  ["Every good and perfect gift is from above.", "James 1:17"],
+  ["The joy of the Lord is your strength.", "Nehemiah 8:10"],
+] as const;
+
+function DailyVerse() {
+  const [i, setI] = useState(0);
+  const [copied, setCopied] = useState(false);
+  useEffect(() => { setI(Math.floor(Date.now() / 864e5) % VERSES.length); }, []);
+  const [text, ref] = VERSES[i];
+  const go = (d: number) => setI((n) => (n + d + VERSES.length) % VERSES.length);
+  async function copy() {
+    await navigator.clipboard.writeText(`"${text}" — ${ref}`);
+    setCopied(true); setTimeout(() => setCopied(false), 2000);
+  }
+  return (
+    <section className="px-5 pb-24">
+      <div className="torn mx-auto max-w-3xl bg-paper px-6 py-14 text-center text-card-foreground sm:px-14">
+        <p className="text-sm font-bold uppercase tracking-[0.3em] text-secondary">Verse of the day</p>
+        <p className="mt-2 text-sm opacity-70">To help you grow in faith, araw-araw 🙏</p>
+        <blockquote key={i} className="font-display mx-auto mt-8 max-w-xl text-2xl leading-snug sm:text-4xl animate-in fade-in duration-500">"{text}"</blockquote>
+        <p className="mt-4 font-bold uppercase tracking-[0.2em] text-secondary">{ref}</p>
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <button onClick={() => go(-1)} aria-label="Previous verse" className="rounded-full bg-ember px-5 py-3 font-semibold text-secondary-foreground transition hover:scale-105 active:scale-95">‹ Prev</button>
+          <button onClick={() => setI(Math.floor(Math.random() * VERSES.length))} className="rounded-full bg-ember px-5 py-3 font-semibold text-secondary-foreground transition hover:scale-105 active:scale-95">✨ Surprise me</button>
+          <button onClick={() => go(1)} aria-label="Next verse" className="rounded-full bg-ember px-5 py-3 font-semibold text-secondary-foreground transition hover:scale-105 active:scale-95">Next ›</button>
+          <button onClick={copy} className="rounded-full bg-ember px-5 py-3 font-semibold text-secondary-foreground transition hover:scale-105 active:scale-95">{copied ? "Copied!" : "Copy verse"}</button>
+        </div>
+        <a href="https://godlovesme.lovable.app/" target="_blank" rel="noreferrer" className="mt-8 inline-flex items-center gap-2 rounded-full bg-gold px-8 py-4 font-extrabold text-primary-foreground shadow-glow transition hover:scale-105 active:scale-95">
+          <Heart className="h-5 w-5" />More daily verses — God Loves Me
+        </a>
+      </div>
+    </section>
   );
 }
 
