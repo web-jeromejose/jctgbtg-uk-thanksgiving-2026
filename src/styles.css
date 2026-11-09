@@ -107,7 +107,7 @@
 }
 
 @theme inline {
-  --font-display: "Fraunces", Georgia, serif;
+  --font-display: "DM Serif Display", Georgia, serif;
   --font-sans: "Manrope", system-ui, sans-serif;
   --color-paper: var(--card);
   --color-ember: var(--secondary);
